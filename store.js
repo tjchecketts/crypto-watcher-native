@@ -3,11 +3,12 @@ import thunk from 'redux-thunk';
 // import apiMiddleware from 'redux-devise-axios';
 import rootReducer from './reducers/index';
 import axios from 'axios';
+import apiMiddleware from './apiMiddleware';
 
 const options = { axios };
 
 const enhancers = compose(
-  applyMiddleware(thunk),
+  applyMiddleware(thunk, apiMiddleware(options)),
   window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
 )
 

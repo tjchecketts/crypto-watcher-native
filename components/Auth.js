@@ -7,12 +7,20 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Link } from 'react-router-native';
+import { connect } from 'react-redux';
+import { handleLogin, registerUser } from '../actions/auth';
 
 class Auth extends React.Component {
   state = { email: '', password: '', passwordConfirmation: '', error: '' }
 
   handleSubmit = () => {
-    //TODO handle auth
+    const { dispatch, type, history } = this.props;
+    const { email, password, passwordConfirmation } = this.state;
+    if (type === 'Register')
+      dispatch(registerUser(email, password, passwordConfirmation, history))
+    else
+      dispatch(handleLogin(email, password, history))
+
     this.setState({ email: '', password: '', passwordConfirmation: '' })
   }
 
@@ -133,4 +141,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Auth;
+export default connect()(Auth);
